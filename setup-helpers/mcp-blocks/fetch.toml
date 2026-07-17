@@ -1,0 +1,6 @@
+[[mcp_servers]]
+name = "fetch"
+transport = "stdio"
+command = "uvx"
+args = ["mcp-server-fetch"]
+startup_timeout_sec = 120

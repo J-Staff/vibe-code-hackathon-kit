@@ -1,0 +1,41 @@
+# Vibe Code Hackathon Kit. Shared base config.
+# Committed and identical for everyone. Contains NO secrets.
+# Your personal key based MCP servers are added by setup.sh to ~/.vibe/config.toml
+# and merged with this file at startup (union by server name).
+
+active_model = "devstral-small"
+default_agent = "plan"
+enable_telemetry = false
+
+# Activate every skill shipped in .vibe/skills (concat merged with your user config)
+enabled_skills = ["*"]
+
+# --- Base MCP servers: run with no extra account, only MISTRAL_API_KEY ---
+
+[[mcp_servers]]
+name = "context7"
+transport = "stdio"
+command = "npx"
+args = ["-y", "@upstash/context7-mcp@latest"]
+startup_timeout_sec = 120
+
+[[mcp_servers]]
+name = "playwright"
+transport = "stdio"
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]
+startup_timeout_sec = 120
+
+[[mcp_servers]]
+name = "fetch"
+transport = "stdio"
+command = "uvx"
+args = ["mcp-server-fetch"]
+startup_timeout_sec = 120
+
+[[mcp_servers]]
+name = "sequential-thinking"
+transport = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+startup_timeout_sec = 120

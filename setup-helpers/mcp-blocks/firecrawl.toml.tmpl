@@ -1,0 +1,7 @@
+[[mcp_servers]]
+name = "firecrawl"
+transport = "stdio"
+command = "npx"
+args = ["-y", "firecrawl-mcp"]
+env = { FIRECRAWL_API_KEY = "__FIRECRAWL_API_KEY__" }
+startup_timeout_sec = 120

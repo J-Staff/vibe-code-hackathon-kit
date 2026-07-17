@@ -1,0 +1,6 @@
+[[mcp_servers]]
+name = "sqlite"
+transport = "stdio"
+command = "uvx"
+args = ["mcp-sqlite", ".vibe/app.sqlite"]
+startup_timeout_sec = 120

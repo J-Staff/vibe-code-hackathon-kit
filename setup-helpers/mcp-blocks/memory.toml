@@ -1,0 +1,7 @@
+[[mcp_servers]]
+name = "memory"
+transport = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-memory"]
+env = { MEMORY_FILE_PATH = ".vibe/memory.jsonl" }
+startup_timeout_sec = 120

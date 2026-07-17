@@ -1,0 +1,7 @@
+# Example custom agent. Call it with: vibe --agent demo-reviewer
+display_name = "Demo Reviewer"
+description = "Read-only code reviewer that explains issues without changing files"
+safety = "safe"
+agent_type = "subagent"
+active_model = "devstral-small"
+enabled_tools = ["read", "grep"]

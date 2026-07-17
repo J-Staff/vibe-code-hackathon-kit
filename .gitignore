@@ -1,0 +1,14 @@
+# Vibe runtime and secrets (never commit)
+.env
+*.local.toml
+.vibe/logs/
+.vibe/.env
+.vibe/*.sqlite*
+.vibe/memory.jsonl
+
+# OS / editor
+.DS_Store
+*.swp
+__pycache__/
+*.pyc
+.pytest_cache/

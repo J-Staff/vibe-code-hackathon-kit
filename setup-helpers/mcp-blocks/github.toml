@@ -1,0 +1,5 @@
+[[mcp_servers]]
+name = "github"
+transport = "streamable-http"
+url = "https://api.githubcopilot.com/mcp/"
+api_key_env = "GITHUB_PAT"

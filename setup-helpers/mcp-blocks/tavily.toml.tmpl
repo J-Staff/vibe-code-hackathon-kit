@@ -1,0 +1,7 @@
+[[mcp_servers]]
+name = "tavily"
+transport = "stdio"
+command = "npx"
+args = ["-y", "tavily-mcp@latest"]
+env = { TAVILY_API_KEY = "__TAVILY_API_KEY__" }
+startup_timeout_sec = 120
