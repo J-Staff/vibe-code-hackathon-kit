@@ -17,4 +17,7 @@ def test_readme_covers_the_five_themes_and_has_no_em_dash():
 
 
 def test_readme_has_one_command_quickstart():
-    assert "./setup.sh" in README.read_text()
+    text = README.read_text()
+    assert "./setup.sh" in text
+    assert "setup.ps1" in text
+    assert "Windows" in text

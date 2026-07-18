@@ -7,12 +7,28 @@ are new to vibe coding.
 
 ## Quickstart
 
+Pick your platform, run four lines, done.
+
+**macOS / Linux**
+
 ```bash
-git clone <your-fork-url> vibe-code-hackathon-kit
+git clone https://github.com/J-Staff/vibe-code-hackathon-kit
 cd vibe-code-hackathon-kit
 ./setup.sh
 vibe
 ```
+
+**Windows (PowerShell)**
+
+```powershell
+git clone https://github.com/J-Staff/vibe-code-hackathon-kit
+cd vibe-code-hackathon-kit
+powershell -ExecutionPolicy Bypass -File .\setup.ps1
+vibe
+```
+
+Both installers do the same thing. Prefer a Linux feel on Windows? WSL works
+with the macOS/Linux path unchanged.
 
 The only thing you must have is a free Mistral API key. Everything else is
 optional and the installer walks you through it.
@@ -41,8 +57,10 @@ files, runs commands, and uses tools. The package is called `mistral-vibe` and
 the command you type is `vibe`.
 
 **What you need.** A laptop with macOS, Linux, or Windows, a terminal, and git.
-That is all. You do NOT need VS Code or any IDE: Vibe runs entirely in your
-terminal and edits the files for you. An editor is only useful if you want to
+On Windows that means PowerShell (preinstalled) or Windows Terminal, plus
+Node.js for some of the tool servers (the installer checks and tells you if it
+is missing). That is all. You do NOT need VS Code or any IDE: Vibe runs
+entirely in your terminal and edits the files for you. An editor is only useful if you want to
 read the code yourself. If you prefer working inside an editor anyway, Mistral
 ships native Vibe extensions for VS Code, JetBrains, and Zed. They share the
 same configuration and sessions as the CLI, so everything in this kit works

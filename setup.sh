@@ -26,6 +26,13 @@ say()  { printf '\n\033[1;34m==>\033[0m %s\n' "$1"; }
 ok()   { printf '\033[1;32m[ok]\033[0m %s\n' "$1"; }
 warn() { printf '\033[1;33m[!]\033[0m %s\n' "$1"; }
 
+py() {  # portable python: macOS/Linux have python3, Git Bash on Windows often only python/py
+  if command -v python3 >/dev/null 2>&1; then python3 "$@"
+  elif command -v python >/dev/null 2>&1; then python "$@"
+  elif command -v py >/dev/null 2>&1; then py -3 "$@"
+  else uv run python "$@"; fi
+}
+
 save_secret() {  # $1 = key name, $2 = value
   [ -z "$2" ] && return 0
   if [ "$DRY_RUN" -eq 1 ]; then echo "[dry-run] would save $1" >&2; return 0; fi
@@ -52,19 +59,19 @@ confirm_default_yes() {  # $1 = question, empty answer counts as yes
 
 add_static_block() {  # $1 = name, $2 = block file
   if [ "$DRY_RUN" -eq 1 ]; then echo "[dry-run] would add MCP: $1" >&2; return 0; fi
-  python3 "$HELPER" "$USER_CONFIG" "$1" "$2"
+  py "$HELPER" "$USER_CONFIG" "$1" "$2"
 }
 
 add_stdio_block() {  # $1 = name, $2 = template, $3 = placeholder, $4 = value
   if [ "$DRY_RUN" -eq 1 ]; then echo "[dry-run] would add MCP: $1" >&2; return 0; fi
   local rendered
   rendered="$(mktemp)"
-  VIBE_TMPL="$2" VIBE_PH="$3" VIBE_VAL="$4" VIBE_OUT="$rendered" python3 -c '
+  VIBE_TMPL="$2" VIBE_PH="$3" VIBE_VAL="$4" VIBE_OUT="$rendered" py -c '
 import os, pathlib
 t = pathlib.Path(os.environ["VIBE_TMPL"]).read_text()
 pathlib.Path(os.environ["VIBE_OUT"]).write_text(t.replace(os.environ["VIBE_PH"], os.environ["VIBE_VAL"]))
 '
-  python3 "$HELPER" "$USER_CONFIG" "$1" "$rendered"
+  py "$HELPER" "$USER_CONFIG" "$1" "$rendered"
   rm -f "$rendered"
 }
 
@@ -82,6 +89,15 @@ if [ "$DRY_RUN" -eq 1 ]; then warn "[dry-run] would install/upgrade mistral-vibe
 elif command -v vibe >/dev/null 2>&1; then uv tool upgrade mistral-vibe || true
 else uv tool install mistral-vibe; fi
 ok "Vibe step done"
+
+# 2b. Node (several MCP servers run via npx)
+say "Checking for Node (context7, playwright, sequential-thinking and memory run via npx)"
+if command -v npx >/dev/null 2>&1; then
+  ok "npx found"
+else
+  warn "Node/npx not found. Those MCP servers will not start without it."
+  warn "Install Node LTS from https://nodejs.org (macOS: brew install node), then re-run ./setup.sh"
+fi
 
 # 3. Mistral API key
 say "Mistral API key (free at https://console.mistral.ai)"
