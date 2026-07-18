@@ -88,6 +88,11 @@ say "Installing / updating Vibe Code (package: mistral-vibe)"
 if [ "$DRY_RUN" -eq 1 ]; then warn "[dry-run] would install/upgrade mistral-vibe"
 elif command -v vibe >/dev/null 2>&1; then uv tool upgrade mistral-vibe || true
 else uv tool install mistral-vibe; fi
+if [ "$DRY_RUN" -eq 0 ]; then
+  # put uv's tool bin dir on the PATH of future shells, so 'vibe' works everywhere
+  uv tool update-shell >/dev/null 2>&1 || warn "could not update PATH automatically"
+  export PATH="$HOME/.local/bin:$PATH"
+fi
 ok "Vibe step done"
 
 # 2b. Node (several MCP servers run via npx)
@@ -168,4 +173,5 @@ fi
 # 6. next steps
 say "Almost done"
 warn "Inside THIS folder, vibe asks you to trust it once so the repo's .vibe/ config loads."
+warn "If 'vibe' is not found, open a NEW terminal first (the PATH change only applies to new shells)."
 ok "Setup complete. Start 'vibe' in any project folder, then type /mcp to see your servers."

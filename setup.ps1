@@ -96,6 +96,11 @@ Say "Installing / updating Vibe Code (package: mistral-vibe)"
 if ($DryRun) { Warn "[dry-run] would install/upgrade mistral-vibe" }
 elseif (Get-Command vibe -ErrorAction SilentlyContinue) { uv tool upgrade mistral-vibe }
 else { uv tool install mistral-vibe }
+if (-not $DryRun) {
+  # put uv's tool bin dir on the user PATH permanently, so 'vibe' works in new terminals
+  try { uv tool update-shell | Out-Null } catch { Warn "could not update PATH automatically" }
+  $env:Path = (Join-Path $env:USERPROFILE ".local\bin") + ";" + $env:Path
+}
 Ok "Vibe step done"
 
 # 2b. Node (several MCP servers run via npx)
@@ -178,4 +183,5 @@ if (Confirm-No "Enable Stripe MCP (payments)?") {
 # 6. next steps
 Say "Almost done"
 Warn "Inside THIS folder, vibe asks you to trust it once so the repo's .vibe/ config loads."
+Warn "If 'vibe' is not recognized, open a NEW terminal window first (the PATH change only applies to new windows)."
 Ok "Setup complete. Start 'vibe' in any project folder, then type /mcp to see your servers."

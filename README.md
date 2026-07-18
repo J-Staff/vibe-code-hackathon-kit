@@ -30,6 +30,10 @@ vibe
 Both installers do the same thing. Prefer a Linux feel on Windows? WSL works
 with the macOS/Linux path unchanged.
 
+If the `vibe` command is not recognized right after the setup, open a NEW
+terminal window and try again: the installer extends your PATH, and that change
+only applies to freshly opened terminals.
+
 The only thing you must have is a free Mistral API key. Everything else is
 optional and the installer walks you through it.
 
